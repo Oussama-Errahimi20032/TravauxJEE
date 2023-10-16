@@ -31,17 +31,15 @@ public class Test {
         System.out.println(ps.findById(2).toString());
         ps.delete(ps.findById(3));
         
-       // Produit pr = ps.findById(1);
-       // pr.setMarque("golf");
-       // pr.setDisignation("moyenne");
-       // ps.update(pr);
+        Produit pr = ps.findById(1);
+        pr.setMarque("golf");
+        pr.setDisignation("moyenne");
+        ps.update(pr);
         
         for (Produit p : ps.findAll()) {
-            if (p.getPrix() > 100) {
+            if (p.getPrix() > 100) 
                 System.out.println(p.toString());
-            } else {
-                System.out.println("Produits n'existe pas");
-            }
+           
         }
         
          
