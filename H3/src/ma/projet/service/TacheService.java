@@ -7,7 +7,6 @@ package ma.projet.service;
 
 import java.util.List;
 import ma.projet.classes.Tache;
-import ma.projet.classes.Tache;
 import ma.projet.dao.IDao;
 import ma.projet.util.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -17,30 +16,30 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author hp
+ * @author oussama
  */
-public class TacheService implements IDao <Tache> {
+public class TacheService implements IDao<Tache> {
 
     @Override
-    public boolean create(Tache p) {
+    public boolean create(Tache o) {
         Session session = null;
         Transaction tx = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             tx = session.beginTransaction();
-            session.save(p);
+            session.save(o);
             tx.commit();
             return true;
-        } catch (HibernateException ex) {
+        } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
-            return false;
         } finally {
             if (session != null) {
                 session.close();
             }
         }
+        return false;
     }
 
     @Override
@@ -53,17 +52,16 @@ public class TacheService implements IDao <Tache> {
             tx = session.beginTransaction();
             tache = (Tache) session.get(Tache.class, id);
             tx.commit();
-            return tache;
-        } catch (HibernateException ex) {
+        } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
-            return tache;
         } finally {
             if (session != null) {
                 session.close();
             }
         }
+        return tache;
     }
 
     @Override
@@ -76,37 +74,40 @@ public class TacheService implements IDao <Tache> {
             tx = session.beginTransaction();
             taches = session.createQuery("from Tache").list();
             tx.commit();
-            return taches;
-        } catch (HibernateException ex) {
-            if(tx != null)
+        } catch (HibernateException e) {
+            if (tx != null) {
                 tx.rollback();
-            return taches;
+            }
         } finally {
-            if(session != null)
+            if (session != null) {
                 session.close();
+            }
         }
+        return taches;
     }
-    
-    public List<Tache> getTachesPrixSuperieur(double prix){
+
+    public List<Tache> getTachesRealise() {
         List<Tache> taches = null;
         Session session = null;
         Transaction tx = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String hql = "FROM Tache t WHERE t.prix > :prixLimite";
-            Query query = session.createQuery(hql);
-            query.setParameter("prixLimite", prix);
+            String hreq = "FROM TacheTache e where e.tacheid = :";
+            Query query = session.createQuery(hreq);
+            query.setParameter("tacheid", 1);
             taches = query.list();
             return taches;
         } catch (HibernateException ex) {
-            if(tx != null)
+            if (tx != null) {
                 tx.rollback();
+            }
             return taches;
         } finally {
-            if(session != null)
+            if (session != null) {
                 session.close();
+            }
         }
     }
-    
 }
+    

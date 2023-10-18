@@ -7,12 +7,13 @@ package ma.projet.dao;
 
 import java.util.List;
 
+
 /**
  *
- * @author hp
+ * @author oussama
  */
 public interface IDao <T> {
-    boolean create(T t);
-    T getById(int id);
-    List<T> getAll();
+    boolean create (T o);
+    T getById (int id);
+    List<T> getAll ();
 }

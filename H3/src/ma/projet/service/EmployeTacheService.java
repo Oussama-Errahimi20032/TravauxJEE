@@ -7,7 +7,6 @@ package ma.projet.service;
 
 import java.util.List;
 import ma.projet.classes.EmployeTache;
-import ma.projet.classes.EmployeTache;
 import ma.projet.dao.IDao;
 import ma.projet.util.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -16,30 +15,30 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author hp
+ * @author oussama
  */
-public class EmployeTacheService implements IDao <EmployeTache> {
+public class EmployeTacheService implements IDao<EmployeTache> {
 
     @Override
-    public boolean create(EmployeTache p) {
+    public boolean create(EmployeTache o) {
         Session session = null;
         Transaction tx = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             tx = session.beginTransaction();
-            session.save(p);
+            session.save(o);
             tx.commit();
             return true;
-        } catch (HibernateException ex) {
+        } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
-            return false;
         } finally {
             if (session != null) {
                 session.close();
             }
         }
+        return false;
     }
 
     @Override
@@ -52,17 +51,16 @@ public class EmployeTacheService implements IDao <EmployeTache> {
             tx = session.beginTransaction();
             employeTache = (EmployeTache) session.get(EmployeTache.class, id);
             tx.commit();
-            return employeTache;
-        } catch (HibernateException ex) {
+        } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
-            return employeTache;
         } finally {
             if (session != null) {
                 session.close();
             }
         }
+        return employeTache;
     }
 
     @Override
@@ -75,15 +73,16 @@ public class EmployeTacheService implements IDao <EmployeTache> {
             tx = session.beginTransaction();
             employeTaches = session.createQuery("from EmployeTache").list();
             tx.commit();
-            return employeTaches;
-        } catch (HibernateException ex) {
-            if(tx != null)
+        } catch (HibernateException e) {
+            if (tx != null) {
                 tx.rollback();
-            return employeTaches;
+            }
         } finally {
-            if(session != null)
+            if (session != null) {
                 session.close();
+            }
         }
+        return employeTaches;
     }
-    
 }
+

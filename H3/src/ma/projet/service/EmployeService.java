@@ -17,30 +17,30 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author hp
+ * @author oussama
  */
-public class EmployeService implements IDao <Employe> {
+public class EmployeService implements IDao<Employe> {
 
     @Override
-    public boolean create(Employe p) {
+    public boolean create(Employe o) {
         Session session = null;
         Transaction tx = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             tx = session.beginTransaction();
-            session.save(p);
+            session.save(o);
             tx.commit();
             return true;
-        } catch (HibernateException ex) {
+        } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
-            return false;
         } finally {
             if (session != null) {
                 session.close();
             }
         }
+        return false;
     }
 
     @Override
@@ -53,17 +53,16 @@ public class EmployeService implements IDao <Employe> {
             tx = session.beginTransaction();
             employe = (Employe) session.get(Employe.class, id);
             tx.commit();
-            return employe;
-        } catch (HibernateException ex) {
+        } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
-            return employe;
         } finally {
             if (session != null) {
                 session.close();
             }
         }
+        return employe;
     }
 
     @Override
@@ -76,17 +75,18 @@ public class EmployeService implements IDao <Employe> {
             tx = session.beginTransaction();
             employes = session.createQuery("from Employe").list();
             tx.commit();
-            return employes;
-        } catch (HibernateException ex) {
-            if(tx != null)
+        } catch (HibernateException e) {
+            if (tx != null) {
                 tx.rollback();
-            return employes;
+            }
         } finally {
-            if(session != null)
+            if (session != null) {
                 session.close();
+            }
         }
+        return employes;
     }
-    
+
     public List<Tache> getTachesRealise() {
         List<Tache> taches = null;
         Session session = null;
@@ -94,18 +94,20 @@ public class EmployeService implements IDao <Employe> {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String hql = "FROM EmployeTache e where e.employeid = :";
-            Query query = session.createQuery(hql);
-            query.setParameter("employeid",1 );
+            String hreq = "FROM EmployeTache e where e.employeid = :";
+            Query query = session.createQuery(hreq);
+            query.setParameter("employeid", 1);
             taches = query.list();
             return taches;
         } catch (HibernateException ex) {
-            if(tx != null)
+            if (tx != null) {
                 tx.rollback();
+            }
             return taches;
         } finally {
-            if(session != null)
+            if (session != null) {
                 session.close();
+            }
         }
     }
     

@@ -6,49 +6,40 @@
 package ma.projet.classes;
 
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
  *
- * @author hp
+ * @author oussama
  */
-
 @Entity
 public class Tache {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
     private String nom;
-    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateDebut;
-    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFin;
-    
     private double prix;
-    
-    @OneToMany(mappedBy = "tache", fetch = FetchType.EAGER)
-    private List<EmployeTache> employeTache;
-    
+    @ManyToOne
+    private Projet projet;
 
     public Tache() {
     }
 
-    public Tache(String nom, Date dateDebut, Date dateFin, double prix) {
+    public Tache(String nom, Date dateDebut, Date dateFin, double prix, Projet projet) {
         this.nom = nom;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.prix = prix;
+        this.projet = projet;
     }
 
     public int getId() {
@@ -91,18 +82,15 @@ public class Tache {
         this.prix = prix;
     }
 
-    public List<EmployeTache> getEmployeTache() {
-        return employeTache;
+    public Projet getProjet() {
+        return projet;
     }
 
-    public void setEmployeTache(List<EmployeTache> employeTache) {
-        this.employeTache = employeTache;
+    public void setProjet(Projet projet) {
+        this.projet = projet;
     }
 
-    @Override
-    public String toString() {
-        return "Tache{" + "id=" + id + ", nom=" + nom + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", prix=" + prix + ", employeTache=" + employeTache + '}';
-    }
+   
     
     
     

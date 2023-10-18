@@ -9,52 +9,45 @@ import java.util.Date;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
  *
- * @author hp
+ * @author oussama
  */
-
 @Entity
 public class EmployeTache {
-    
     @EmbeddedId
-    private EmployeTacheId id;
-    
+    private EmployeTachePk pk;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateDebutReelle;
-    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFinReelle;
-    
     @ManyToOne
-    @JoinColumn(name = "employe_id", insertable = false, updatable = false)
+    @JoinColumn(name = "employe", insertable = false, updatable = false)
     private Employe employe;
-    
     @ManyToOne
-    @JoinColumn(name = "tache_id", insertable = false, updatable = false)
+    @JoinColumn(name = "tache", insertable = false, updatable = false)
     private Tache tache;
 
     public EmployeTache() {
     }
 
-    public EmployeTache(EmployeTacheId id, Date dateDebutReelle, Date dateFinReelle, Employe employe, Tache tache) {
-        this.id = id;
+    public EmployeTache(EmployeTachePk pk, Date dateDebutReelle, Date dateFinReelle, Employe employe, Tache tache) {
+        this.pk = pk;
         this.dateDebutReelle = dateDebutReelle;
         this.dateFinReelle = dateFinReelle;
         this.employe = employe;
         this.tache = tache;
     }
 
-    public EmployeTacheId getId() {
-        return id;
+    public EmployeTachePk getPk() {
+        return pk;
     }
 
-    public void setId(EmployeTacheId id) {
-        this.id = id;
+    public void setPk(EmployeTachePk pk) {
+        this.pk = pk;
     }
 
     public Date getDateDebutReelle() {
@@ -90,6 +83,5 @@ public class EmployeTache {
     }
     
     
-    
-    
+
 }

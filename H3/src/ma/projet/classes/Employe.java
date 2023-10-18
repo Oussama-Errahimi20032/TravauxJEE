@@ -5,7 +5,6 @@
  */
 package ma.projet.classes;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,35 +14,26 @@ import javax.persistence.OneToMany;
 
 /**
  *
- * @author hp
+ * @author oussama
  */
-
 @Entity
 public class Employe {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
     private String nom;
     private String prenom;
     private String telephone;
-    
-    @OneToMany(mappedBy = "employe")
-    private List<Projet> projets;
-    
-    @OneToMany(mappedBy = "employe")
-    private List<EmployeTache> employeTache;
+    @OneToMany
+    private List <Projet> projet;
 
     public Employe() {
-        projets = new ArrayList<Projet>();
     }
 
     public Employe(String nom, String prenom, String telephone) {
         this.nom = nom;
         this.prenom = prenom;
         this.telephone = telephone;
-        projets = new ArrayList<Projet>();
     }
 
     public int getId() {
@@ -78,13 +68,12 @@ public class Employe {
         this.telephone = telephone;
     }
 
-    public List<Projet> getProjets() {
-        return projets;
+    public List<Projet> getProjet() {
+        return projet;
     }
 
-    public void setProjets(List<Projet> projets) {
-        this.projets = projets;
+    public void setProjet(List<Projet> projet) {
+        this.projet = projet;
     }
-    
-    
+
 }

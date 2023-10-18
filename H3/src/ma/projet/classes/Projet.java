@@ -5,50 +5,31 @@
  */
 package ma.projet.classes;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
  *
- * @author hp
+ * @author oussama
  */
-
 @Entity
 public class Projet {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
     private String nom;
-    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateDebut;
-    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFin;
-    
     @OneToOne
-    @JoinColumn(name = "employe_id")
     private Employe employe;
-    
-//    @OneToMany(mappedBy = "projet", cascade = CascadeType.REMOVE)
-//    private List<Tache> taches;
-    
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "projet_id")
-    private List<Tache> taches;
 
     public Projet() {
     }
@@ -58,6 +39,14 @@ public class Projet {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.employe = employe;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -92,14 +81,6 @@ public class Projet {
         this.employe = employe;
     }
 
-    public List<Tache> getTaches() {
-        if (taches == null) taches = new ArrayList<Tache>();
-        return taches;
-    }
-
-    public void setTaches(List<Tache> taches) {
-        this.taches = taches;
-    }
-    
+   
     
 }
